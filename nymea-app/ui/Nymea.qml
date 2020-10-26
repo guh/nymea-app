@@ -40,8 +40,10 @@ import Nymea 1.0
 ApplicationWindow {
     id: app
     visible: true
-    width: 360
-    height: 580
+    width: settings.windowWidth
+    height: settings.windowHeight
+    x: 0
+    y: 0
     minimumWidth: 350
     minimumHeight: 480
     visibility: kioskMode ? ApplicationWindow.FullScreen : settings.viewMode
@@ -67,8 +69,8 @@ ApplicationWindow {
 
     readonly property var settings: Settings {
         property int viewMode: ApplicationWindow.AutomaticVisibility
-        property alias windowWidth: app.width
-        property alias windowHeight: app.height
+        property int windowWidth: 1024
+        property int windowHeight: 768
         property bool returnToHome: false
         property string graphStyle: "bars"
         property string style: "light"
