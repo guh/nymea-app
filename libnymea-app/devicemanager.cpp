@@ -205,7 +205,7 @@ void DeviceManager::notificationReceived(const QVariantMap &data)
         device->deleteLater();
     } else if (notification == "Devices.DeviceChanged") {
         QUuid deviceId = data.value("params").toMap().value("device").toMap().value("id").toUuid();
-        qDebug() << "Device changed notification" << deviceId << data.value("params").toMap();
+//        qDebug() << "Device changed notification" << deviceId << data.value("params").toMap();
         Device *oldDevice = m_devices->getDevice(deviceId);
         if (!oldDevice) {
             qWarning() << "Received a device changed notification for a device we don't know";
@@ -215,7 +215,7 @@ void DeviceManager::notificationReceived(const QVariantMap &data)
             qWarning() << "Error parsing device changed notification";
             return;
         }
-        qDebug() << "*** device unpacked" << oldDevice->stateValue("98e4476f-e745-4a7f-b795-19269cb70c40");
+//        qDebug() << "*** device unpacked" << oldDevice->stateValue("98e4476f-e745-4a7f-b795-19269cb70c40");
     } else if (notification == "Devices.DeviceSettingChanged") {
         QUuid deviceId = data.value("params").toMap().value("deviceId").toUuid();
         QString paramTypeId = data.value("params").toMap().value("paramTypeId").toString();

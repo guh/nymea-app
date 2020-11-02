@@ -42,20 +42,21 @@ Page {
         onBackPressed: pageStack.pop()
     }
 
-    property Device device: null
+    property Device thing: null
+    property alias device: root.thing
 
     signal stateSelected(var stateTypeId);
 
     ListView {
         anchors.fill: parent
 
-        model: device.deviceClass.stateTypes
+        model: root.thing.thingClass.stateTypes
 
         delegate: NymeaListItemDelegate {
             width: parent.width
             iconName: "../images/state.svg"
             text: model.displayName
-            subText: root.device.states.getState(model.id).value
+            subText: root.thing.states.getState(model.id).value
             prominentSubText: false
             onClicked: {
                 root.stateSelected(model.id)

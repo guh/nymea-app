@@ -305,8 +305,8 @@ QDebug printStateEvaluator(QDebug &dbg, StateEvaluator *stateEvaluator, int inde
     if (stateEvaluator->stateDescriptor()) {
         for (int i = 0; i < indentLevel; i++) { dbg << " "; }
         dbg << "State Descriptor:";
-        if (!stateEvaluator->stateDescriptor()->deviceId().isNull() && !stateEvaluator->stateDescriptor()->stateTypeId().isNull()) {
-            dbg << "Device ID:" << stateEvaluator->stateDescriptor()->deviceId().toString() << "State Type ID:" << stateEvaluator->stateDescriptor()->stateTypeId().toString();
+        if (!stateEvaluator->stateDescriptor()->thingId().isNull() && !stateEvaluator->stateDescriptor()->stateTypeId().isNull()) {
+            dbg << "Device ID:" << stateEvaluator->stateDescriptor()->thingId().toString() << "State Type ID:" << stateEvaluator->stateDescriptor()->stateTypeId().toString();
         } else {
             dbg << "Interface name:" << stateEvaluator->stateDescriptor()->interfaceName() << "State Name:" << stateEvaluator->stateDescriptor()->interfaceState();
         }
@@ -330,7 +330,7 @@ QDebug printStateEvaluator(QDebug &dbg, StateEvaluator *stateEvaluator, int inde
             dbg << ">=";
             break;
         }
-        dbg << stateEvaluator->stateDescriptor()->value() << endl;
+        dbg << stateEvaluator->stateDescriptor()->value() << '/' << stateEvaluator->stateDescriptor()->valueThingId() << stateEvaluator->stateDescriptor()->valueStateTypeId() << endl;
     }
     if (stateEvaluator->childEvaluators()->rowCount() > 0) {
         for (int i = 0; i < indentLevel; i++) { dbg << " "; }

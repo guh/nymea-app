@@ -135,18 +135,26 @@ ItemDelegate {
     }
     Component {
         id: boolComponent
-        Switch {
-            checked: root.param.value === true
-            Component.onCompleted: {
-                if (root.param.value === undefined) {
+        Item {
+            implicitHeight: theSwitch.implicitHeight
+            implicitWidth: theSwitch.implicitWidth
+            Switch {
+                id: theSwitch
+                anchors { top: parent.top; right: parent.right; bottom: parent.bottom }
+                width: Math.min(parent.width, implicitiWidth)
+                checked: root.param.value === true
+                Component.onCompleted: {
+                    if (root.param.value === undefined) {
+                        root.param.value = checked;
+                    }
+                }
+
+                onClicked: {
                     root.param.value = checked;
                 }
             }
-
-            onClicked: {
-                root.param.value = checked;
-            }
         }
+
     }
     Component {
         id: sliderComponent

@@ -188,7 +188,7 @@ void RuleManager::getRuleDetailsReply(int commandId, const QVariantMap &params)
     parseRuleExitActions(ruleMap.value("exitActions").toList(), rule);
     parseTimeDescriptor(ruleMap.value("timeDescriptor").toMap(), rule);
     rule->setStateEvaluator(parseStateEvaluator(ruleMap.value("stateEvaluator").toMap()));
-    //    qDebug() << "** Rule details received:" << rule;
+    qDebug() << "** Rule details received:" << rule;
     //    qDebug() << "Rule JSON:" << qUtf8Printable(QJsonDocument::fromVariant(ruleMap).toJson());
 }
 
@@ -269,7 +269,7 @@ void RuleManager::parseEventDescriptors(const QVariantList &eventDescriptorList,
 
 StateEvaluator *RuleManager::parseStateEvaluator(const QVariantMap &stateEvaluatorMap)
 {
-    //    qDebug() << "Parsing state evaluator. Child count:" << stateEvaluatorMap.value("childEvaluators").toList().count();
+    qDebug() << "Parsing state evaluator:" << qUtf8Printable(QJsonDocument::fromVariant(stateEvaluatorMap).toJson());
     if (!stateEvaluatorMap.contains("stateDescriptor")) {
         return nullptr;
     }
@@ -284,6 +284,11 @@ StateEvaluator *RuleManager::parseStateEvaluator(const QVariantMap &stateEvaluat
     } else {
         sd = new StateDescriptor(sdMap.value("interface").toString(), sdMap.value("interfaceState").toString(), op, sdMap.value("value"), stateEvaluator);
     }
+    if (sdMap.contains("valueThingId") && sdMap.contains("valueStateTypeId")) {
+        sd->setValueThingId(sdMap.value("valueThingId").toUuid());
+        sd->setValueStateTypeId(sdMap.value("valueStateTypeId").toUuid());
+    }
+    qDebug() << "Parsing stuff" << sd->valueThingId() << sd->valueStateTypeId();
     stateEvaluator->setStateDescriptor(sd);
 
     foreach (const QVariant &childEvaluatorVariant, stateEvaluatorMap.value("childEvaluators").toList()) {
@@ -556,8 +561,8 @@ QVariantMap RuleManager::packStateEvaluator(StateEvaluator *stateEvaluator)
     QMetaEnum stateOperatorEnum = QMetaEnum::fromType<StateEvaluator::StateOperator>();
     ret.insert("operator", stateOperatorEnum.valueToKey(stateEvaluator->stateOperator()));
     QVariantMap stateDescriptor;
-    if (!stateEvaluator->stateDescriptor()->deviceId().isNull() && !stateEvaluator->stateDescriptor()->stateTypeId().isNull()) {
-        stateDescriptor.insert("deviceId", stateEvaluator->stateDescriptor()->deviceId());
+    if (!stateEvaluator->stateDescriptor()->thingId().isNull() && !stateEvaluator->stateDescriptor()->stateTypeId().isNull()) {
+        stateDescriptor.insert("deviceId", stateEvaluator->stateDescriptor()->thingId());
         stateDescriptor.insert("stateTypeId", stateEvaluator->stateDescriptor()->stateTypeId());
     } else {
         stateDescriptor.insert("interface", stateEvaluator->stateDescriptor()->interfaceName());
@@ -565,7 +570,12 @@ QVariantMap RuleManager::packStateEvaluator(StateEvaluator *stateEvaluator)
     }
     QMetaEnum valueOperatorEnum = QMetaEnum::fromType<StateDescriptor::ValueOperator>();
     stateDescriptor.insert("operator", valueOperatorEnum.valueToKeys(stateEvaluator->stateDescriptor()->valueOperator()));
-    stateDescriptor.insert("value", stateEvaluator->stateDescriptor()->value());
+    if (!stateEvaluator->stateDescriptor()->value().isNull()) {
+        stateDescriptor.insert("value", stateEvaluator->stateDescriptor()->value());
+    } else {
+        stateDescriptor.insert("valueThingId", stateEvaluator->stateDescriptor()->valueThingId());
+        stateDescriptor.insert("valueStateTypeId", stateEvaluator->stateDescriptor()->valueStateTypeId());
+    }
     ret.insert("stateDescriptor", stateDescriptor);
     QVariantList childEvaluators;
     for (int i = 0; i < stateEvaluator->childEvaluators()->rowCount(); i++) {

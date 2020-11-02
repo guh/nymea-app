@@ -122,6 +122,8 @@ Page {
                             ParamDelegate {
                                 id: paramDelegate
                                 Layout.fillWidth: true
+                                hoverEnabled: false
+                                padding: 0
                                 paramType: root.actionType.paramTypes.get(index)
                                 enabled: staticParamRadioButton.checked
                                 nameVisible: false

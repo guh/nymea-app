@@ -72,13 +72,13 @@ void StateEvaluator::setStateDescriptor(StateDescriptor *stateDescriptor)
     m_stateDescriptor = stateDescriptor;
 }
 
-bool StateEvaluator::containsDevice(const QUuid &deviceId) const
+bool StateEvaluator::containsDevice(const QUuid &thingId) const
 {
-    if (m_stateDescriptor && m_stateDescriptor->deviceId() == deviceId) {
+    if (m_stateDescriptor && m_stateDescriptor->thingId() == thingId) {
         return true;
     }
     for (int i = 0; i < m_childEvaluators->rowCount(); i++) {
-        if (m_childEvaluators->get(i)->containsDevice(deviceId)) {
+        if (m_childEvaluators->get(i)->containsDevice(thingId)) {
             return true;
         }
     }
@@ -96,12 +96,7 @@ StateEvaluator *StateEvaluator::clone() const
 {
     StateEvaluator *ret = new StateEvaluator();
     ret->m_operator = this->m_operator;
-    ret->m_stateDescriptor->setDeviceId(this->m_stateDescriptor->deviceId());
-    ret->m_stateDescriptor->setStateTypeId(this->m_stateDescriptor->stateTypeId());
-    ret->m_stateDescriptor->setInterfaceName(this->m_stateDescriptor->interfaceName());
-    ret->m_stateDescriptor->setInterfaceState(this->m_stateDescriptor->interfaceState());
-    ret->m_stateDescriptor->setValueOperator(this->m_stateDescriptor->valueOperator());
-    ret->m_stateDescriptor->setValue(this->m_stateDescriptor->value());
+    ret->m_stateDescriptor = this->m_stateDescriptor->clone();
     for (int i = 0; i < this->m_childEvaluators->rowCount(); i++) {
         ret->m_childEvaluators->addStateEvaluator(this->m_childEvaluators->get(i)->clone());
     }
