@@ -14,16 +14,6 @@ ScriptAutoSaver::~ScriptAutoSaver()
     storeContent();
 }
 
-void ScriptAutoSaver::classBegin()
-{
-
-}
-
-void ScriptAutoSaver::componentComplete()
-{
-
-}
-
 bool ScriptAutoSaver::available() const
 {
     return m_cacheFile.isOpen();

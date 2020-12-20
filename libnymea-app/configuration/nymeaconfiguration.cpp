@@ -254,6 +254,7 @@ void NymeaConfiguration::deleteMqttPolicy(const QString &clientId)
 
 void NymeaConfiguration::getConfigurationsResponse(int commandId, const QVariantMap &params)
 {
+    Q_UNUSED(commandId)
 //    qDebug() << "have config reply" << params;
     QVariantMap basicConfig = params.value("basicConfiguration").toMap();
     m_debugServerEnabled = basicConfig.value("debugServerEnabled").toBool();
@@ -344,6 +345,7 @@ void NymeaConfiguration::deleteWebSocketConfigReply(int commandId, const QVarian
 
 void NymeaConfiguration::getMqttServerConfigsReply(int commandId, const QVariantMap &params)
 {
+    Q_UNUSED(commandId)
     m_mqttServerConfigurations->clear();
     foreach (const QVariant &mqttServerVariant, params.value("mqttServerConfigurations").toList()) {
         QVariantMap mqttConfigMap = mqttServerVariant.toMap();
@@ -364,6 +366,7 @@ void NymeaConfiguration::deleteMqttConfigReply(int commandId, const QVariantMap 
 
 void NymeaConfiguration::getMqttPoliciesReply(int commandId, const QVariantMap &params)
 {
+    Q_UNUSED(commandId)
 //    qDebug() << "Mqtt polices:" << params;
     m_mqttPolicies->clear();
     foreach (const QVariant &policyVariant, params.value("mqttPolicies").toList()) {

@@ -177,6 +177,7 @@ void RuleManager::getRulesReply(int /*commandId*/, const QVariantMap &params)
 
 void RuleManager::getRuleDetailsReply(int commandId, const QVariantMap &params)
 {
+    Q_UNUSED(commandId)
     QVariantMap ruleMap = params.value("rule").toMap();
     Rule* rule = m_rules->getRule(ruleMap.value("id").toUuid());
     if (!rule) {

@@ -31,13 +31,16 @@
 #ifndef NYMEACONNECTION_H
 #define NYMEACONNECTION_H
 
+// QNetworkConfigurationManager is deprecated as of 5.15 and there is no replacement yet
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 #include <QObject>
 #include <QHash>
 #include <QSslError>
 #include <QAbstractSocket>
 #include <QUrl>
 #include <QNetworkConfigurationManager>
-
 
 #include "nymeahost.h"
 
@@ -139,5 +142,7 @@ private:
     NymeaHost *m_currentHost = nullptr;
     Connection *m_preferredConnection = nullptr;
 };
+
+#pragma GCC diagnostic pop
 
 #endif // NYMEACONNECTION_H

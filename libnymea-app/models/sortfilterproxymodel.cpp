@@ -42,7 +42,7 @@ void SortFilterProxyModel::setFilterList(const QStringList &filterList)
     }
 }
 
-QVariant SortFilterProxyModel::data(int row, const QString &role) const
+QVariant SortFilterProxyModel::get(int row, const QString &role) const
 {
     int roleId = roleNames().key(role.toUtf8());
     return QSortFilterProxyModel::data(index(row, 0), roleId);

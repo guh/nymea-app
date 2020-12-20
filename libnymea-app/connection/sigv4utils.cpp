@@ -76,7 +76,7 @@ QByteArray SigV4Utils::getCanonicalQueryString(const QNetworkRequest &request, c
 {
     QByteArray algorithm = "AWS4-HMAC-SHA256";
     QByteArray dateTime = getCurrentDateTime();
-    QByteArray credentialScope = getCredentialScope(algorithm, dateTime, region, service);
+    QByteArray credentialScope = getCredentialScope(dateTime, region, service);
 
     QByteArray canonicalQueryString;
     canonicalQueryString += "X-Amz-Algorithm=AWS4-HMAC-SHA256";
@@ -148,7 +148,7 @@ QByteArray SigV4Utils::getCanonicalRequest(QNetworkAccessManager::Operation oper
     return canonicalRequest;
 }
 
-QByteArray SigV4Utils::getCredentialScope(const QByteArray &algorithm, const QByteArray &dateTime, const QByteArray &region, const QByteArray &service)
+QByteArray SigV4Utils::getCredentialScope(const QByteArray &dateTime, const QByteArray &region, const QByteArray &service)
 {
     QByteArray credentialScope = dateTime.left(8) + '/' + region + '/' + service + "/aws4_request";
     return credentialScope;
@@ -157,7 +157,7 @@ QByteArray SigV4Utils::getCredentialScope(const QByteArray &algorithm, const QBy
 QByteArray SigV4Utils::getStringToSign(const QByteArray &canonicalRequest, const QByteArray &dateTime, const QByteArray &region, const QByteArray &service)
 {
     QByteArray algorithm = "AWS4-HMAC-SHA256";
-    QByteArray credentialScope = getCredentialScope(algorithm, dateTime, region, service);
+    QByteArray credentialScope = getCredentialScope(dateTime, region, service);
 
     QByteArray stringToSign = algorithm + '\n' + dateTime + '\n' + credentialScope + '\n' + QCryptographicHash::hash(canonicalRequest, QCryptographicHash::Sha256).toHex();
     return stringToSign;

@@ -236,6 +236,7 @@ void SystemController::getUpdateStatusResponse(int /*commandId*/, const QVariant
 
 void SystemController::getPackagesResponse(int commandId, const QVariantMap &data)
 {
+    Q_UNUSED(commandId)
     foreach (const QVariant &packageVariant, data.value("packages").toList()) {
         QString id = packageVariant.toMap().value("id").toString();
         QString displayName = packageVariant.toMap().value("displayName").toString();
@@ -275,6 +276,7 @@ void SystemController::enableRepositoryResponse(int commandId, const QVariantMap
 
 void SystemController::getServerTimeResponse(int commandId, const QVariantMap &params)
 {
+    Q_UNUSED(commandId)
     m_serverTime = QDateTime::fromSecsSinceEpoch(params.value("time").toUInt());
 
     // NOTE: Ideally we'd just set the TimeZone of our serverTime prooperly, however, there's a bug on Android

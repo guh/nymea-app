@@ -88,6 +88,7 @@ DeviceControlApplication::DeviceControlApplication(int argc, char *argv[]) : QAp
 
 void DeviceControlApplication::handleNdefMessage(QNdefMessage message, QNearFieldTarget *target)
 {
+    Q_UNUSED(target)
     qDebug() << "************* NFC message!" << message.toByteArray();
     if (message.count() < 1) {
         qWarning() << "NFC message doesn't contain any records...";

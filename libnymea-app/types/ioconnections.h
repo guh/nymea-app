@@ -53,7 +53,7 @@ public:
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
-    QHash<int, QByteArray> roleNames() const;
+    QHash<int, QByteArray> roleNames() const override;
 
     void addIOConnection(IOConnection *ioConnection);
     void removeIOConnection(const QUuid &ioConnectionId);

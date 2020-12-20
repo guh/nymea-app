@@ -220,29 +220,29 @@ int Device::executeAction(const QString &actionName, const QVariantList &params)
 
 QDebug operator<<(QDebug &dbg, Device *thing)
 {
-    dbg.nospace() << "Thing: " << thing->name() << " (" << thing->id().toString() << ") Class:" << thing->thingClass()->name() << " (" << thing->thingClassId().toString() << ")" << endl;
+    dbg.nospace() << "Thing: " << thing->name() << " (" << thing->id().toString() << ") Class:" << thing->thingClass()->name() << " (" << thing->thingClassId().toString() << ")" << Qt::endl;
     for (int i = 0; i < thing->thingClass()->paramTypes()->rowCount(); i++) {
         ParamType *pt = thing->thingClass()->paramTypes()->get(i);
         Param *p = thing->params()->getParam(pt->id().toString());
         if (p) {
-            dbg << "  Param " << i << ": " << pt->id().toString() << ": " << pt->name() << " = " << p->value() << endl;
+            dbg << "  Param " << i << ": " << pt->id().toString() << ": " << pt->name() << " = " << p->value() << Qt::endl;
         } else {
-            dbg << "  Param " << i << ": " << pt->id().toString() << ": " << pt->name() << " = " << "*** Unknown value ***" << endl;
+            dbg << "  Param " << i << ": " << pt->id().toString() << ": " << pt->name() << " = " << "*** Unknown value ***" << Qt::endl;
         }
     }
     for (int i = 0; i < thing->thingClass()->settingsTypes()->rowCount(); i++) {
         ParamType *pt = thing->thingClass()->settingsTypes()->get(i);
         Param *p = thing->settings()->getParam(pt->id().toString());
         if (p) {
-            dbg << "  Setting " << i << ": " << pt->id().toString() << ": " << pt->name() << " = " << p->value() << endl;
+            dbg << "  Setting " << i << ": " << pt->id().toString() << ": " << pt->name() << " = " << p->value() << Qt::endl;
         } else {
-            dbg << "  Setting " << i << ": " << pt->id().toString() << ": " << pt->name() << " = " << "*** Unknown value ***" << endl;
+            dbg << "  Setting " << i << ": " << pt->id().toString() << ": " << pt->name() << " = " << "*** Unknown value ***" << Qt::endl;
         }
     }
     for (int i = 0; i < thing->thingClass()->stateTypes()->rowCount(); i++) {
         StateType *st = thing->thingClass()->stateTypes()->get(i);
         State *s = thing->states()->getState(st->id());
-        dbg << "  State " << i << ": " << st->id() << ": " << st->name() << " = " << s->value() << endl;
+        dbg << "  State " << i << ": " << st->id() << ": " << st->name() << " = " << s->value() << Qt::endl;
     }
     return dbg;
 }

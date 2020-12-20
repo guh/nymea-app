@@ -239,6 +239,7 @@ LogEntry *LogsModelNg::get(int index) const
 
 void LogsModelNg::logsReply(int commandId, const QVariantMap &data)
 {
+    Q_UNUSED(commandId)
     int offset = data.value("offset").toInt();
     int count = data.value("count").toInt();
 
@@ -317,10 +318,10 @@ void LogsModelNg::logsReply(int commandId, const QVariantMap &data)
                 }
 
                 // Adjust min/max
-                if (!newMin.isValid() || newMin > entry->value()) {
+                if (!newMin.isValid() || newMin.toDouble() > entry->value().toDouble()) {
                     newMin = 0;
                 }
-                if (!newMax.isValid() || newMax < entry->value()) {
+                if (!newMax.isValid() || newMax.toDouble() < entry->value().toDouble()) {
                     newMax = 1;
                 }
 
@@ -336,10 +337,10 @@ void LogsModelNg::logsReply(int commandId, const QVariantMap &data)
                 m_graphSeries->append(QPointF(entry->timestamp().toMSecsSinceEpoch(), value.toReal()));
 
                 // Adjust min/max
-                if (!newMin.isValid() || newMin > value) {
+                if (!newMin.isValid() || newMin.toDouble() > value.toDouble()) {
                     newMin = value.toReal();
                 }
-                if (!newMax.isValid() || newMax < value) {
+                if (!newMax.isValid() || newMax.toDouble() < value.toDouble()) {
                     newMax = value.toReal();
                 }
             }
@@ -504,12 +505,12 @@ void LogsModelNg::newLogEntryReceived(const QVariantMap &data)
         }
 
 
-        if (m_minValue > entry->value().toReal()) {
-            m_minValue = entry->value().toReal();
+        if (m_minValue.toDouble() > entry->value().toDouble()) {
+            m_minValue = entry->value().toDouble();
             emit minValueChanged();
         }
-        if (m_maxValue < entry->value().toReal()) {
-            m_maxValue = entry->value().toReal();
+        if (m_maxValue.toDouble() < entry->value().toDouble()) {
+            m_maxValue = entry->value().toDouble();
             emit maxValueChanged();
         }
     }

@@ -19,7 +19,7 @@ public:
     QStringList filterList() const;
     void setFilterList(const QStringList &filterList);
 
-    Q_INVOKABLE QVariant data(int row, const QString &role) const;
+    Q_INVOKABLE QVariant get(int row, const QString &role) const;
 
 signals:
     void filterRoleNameChanged();

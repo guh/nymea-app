@@ -72,11 +72,11 @@ RuleActions *NfcThingActionWriter::actions() const
 int NfcThingActionWriter::messageSize() const
 {
     return m_currentMessage.toByteArray().size();
-    int ret = 0;
-    for (int i = 0; i < m_currentMessage.size(); i++) {
-        ret += m_currentMessage.at(i).payload().size();
-    }
-    return ret;
+//    int ret = 0;
+//    for (int i = 0; i < m_currentMessage.size(); i++) {
+//        ret += m_currentMessage.at(i).payload().size();
+//    }
+//    return ret;
 }
 
 NfcThingActionWriter::TagStatus NfcThingActionWriter::status() const
@@ -142,10 +142,10 @@ void NfcThingActionWriter::updateContent()
 
     QNdefNfcUriRecord record;
     record.setUri(url);
-    QNdefMessage message;
-    message.append(record);
 
-    m_currentMessage = message;
+    m_currentMessage.clear();
+    m_currentMessage.append(record);
+
     emit messageSizeChanged();
 
 }
@@ -155,6 +155,7 @@ void NfcThingActionWriter::targetDetected(QNearFieldTarget *target)
     QDateTime startTime = QDateTime::currentDateTime();
     qDebug() << "target detected";
     connect(target, &QNearFieldTarget::error, this, [=](QNearFieldTarget::Error error, const QNearFieldTarget::RequestId &id){
+        Q_UNUSED(id)
         qDebug() << "Tag error:" << error;
         m_status = TagStatusFailed;
         emit statusChanged();
@@ -165,7 +166,8 @@ void NfcThingActionWriter::targetDetected(QNearFieldTarget *target)
         emit statusChanged();
     });
 
-    QNearFieldTarget::RequestId m_request = target->writeNdefMessages(QList<QNdefMessage>() << m_currentMessage);
+    QNearFieldTarget::RequestId m_request = target->writeNdefMessages({m_currentMessage});
+
     if (!m_request.isValid()) {
         qDebug() << "Error writing tag";
         m_status = TagStatusFailed;

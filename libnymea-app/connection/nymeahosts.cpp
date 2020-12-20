@@ -267,6 +267,7 @@ bool NymeaHostsFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &s
                 hasReachableConnection |= m_jsonRpcClient->availableBearerTypes().testFlag(NymeaConnection::BearerTypeBluetooth);
                 break;
             case Connection::BearerTypeUnknown:
+            case Connection::BearerTypeLoopback:
                 hasReachableConnection = true;
                 break;
             case Connection::BearerTypeNone:

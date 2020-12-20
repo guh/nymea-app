@@ -1,9 +1,17 @@
 #ifndef NFCTHINGACTIONWRITER_H
 #define NFCTHINGACTIONWRITER_H
 
+// QNearFieldTarget::operator=() is deprecated but used in QNdefMessage in 5.15
+#pragma GCC diagnostic push
+#if defined __GNUC__ && !defined (__clang__)
+#pragma GCC diagnostic ignored "-Wdeprecated-copy"
+#endif
+
 #include <QObject>
 #include <QNearFieldManager>
 #include <QNdefMessage>
+
+#pragma GCC diagnostic pop
 
 #include "types/device.h"
 #include "engine.h"

@@ -68,7 +68,7 @@ Page {
                 color: Style.headerForegroundColor
                 text: d.configOverlay !== null ?
                            qsTr("Configure main view")
-                         : swipeView.currentItem.item.title.length > 0 ? swipeView.currentItem.item.title : filteredContentModel.data(swipeView.currentIndex, "displayName")
+                         : swipeView.currentItem.item.title.length > 0 ? swipeView.currentItem.item.title : filteredContentModel.get(swipeView.currentIndex, "displayName")
             }
         }
     }

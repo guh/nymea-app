@@ -45,6 +45,10 @@
 
 #include "nymeatransportinterface.h"
 
+// QNetworkConfigurationManager is deprecated as of 5.15 and there is no replacement yet
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 NymeaConnection::NymeaConnection(QObject *parent) : QObject(parent)
 {
     m_networkConfigManager = new QNetworkConfigurationManager(this);
@@ -62,6 +66,7 @@ NymeaConnection::NymeaConnection(QObject *parent) : QObject(parent)
 
     QGuiApplication *app = static_cast<QGuiApplication*>(QGuiApplication::instance());
     QObject::connect(app, &QGuiApplication::applicationStateChanged, this, [this](Qt::ApplicationState state) {
+        Q_UNUSED(state)
 //        qDebug() << "Application state changed to:" << state;
         updateActiveBearers();
     });
@@ -573,3 +578,5 @@ QSslCertificate NymeaConnection::sslCertificate() const
     }
     return m_currentTransport->serverCertificate();
 }
+
+#pragma GCC diagnostic pop

@@ -50,7 +50,7 @@ public:
     static QByteArray getCanonicalQueryString(const QNetworkRequest &request, const QByteArray &accessKeyId, const QByteArray &secretAccessKey, const QByteArray &sessionToken, const QByteArray &region, const QByteArray &service, const QByteArray &payload);
     static QByteArray getCanonicalRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, const QByteArray &payload);
     static QByteArray getCanonicalHeaders(const QNetworkRequest &request);
-    static QByteArray getCredentialScope(const QByteArray &algorithm, const QByteArray &dateTime, const QByteArray &region, const QByteArray &service);
+    static QByteArray getCredentialScope(const QByteArray &dateTime, const QByteArray &region, const QByteArray &service);
     static QByteArray getStringToSign(const QByteArray &canonicalRequest, const QByteArray &dateTime, const QByteArray &region, const QByteArray &service);
     static QByteArray getSignatureKey(const QByteArray &key, const QByteArray &date, const QByteArray &region, const QByteArray &service);
     static QByteArray getSignature(const QByteArray &stringToSign, const QByteArray &secretAccessKey, const QByteArray &dateTime, const QString &region, const QString &service);
