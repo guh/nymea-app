@@ -232,5 +232,8 @@
         <file>ui/customviews/ThermostatController.qml</file>
         <file>ui/devicepages/ThermostatDevicePage.qml</file>
         <file>ui/components/BigThingTile.qml</file>
+        <file>ui/system/ModbusRtuSettingsPage.qml</file>
+        <file>ui/system/ModbusRtuAddMasterPage.qml</file>
+        <file>ui/system/ModbusRtuReconfigureMasterPage.qml</file>
     </qresource>
 </RCC>

@@ -256,5 +256,6 @@
         <file>ui/images/sensors/water.svg</file>
         <file>ui/images/zigbee/deCONZ.svg</file>
         <file>ui/images/zigbee/NXP.svg</file>
+        <file>ui/images/modbus.svg</file>
     </qresource>
 </RCC>

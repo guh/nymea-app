@@ -126,6 +126,9 @@
 #include "zigbee/zigbeeadaptersproxy.h"
 #include "zigbee/zigbeenetwork.h"
 #include "zigbee/zigbeenetworks.h"
+#include "modbus/modbusrtumanager.h"
+#include "modbus/modbusrtumasters.h"
+#include "types/serialportsproxy.h"
 
 #include <QtQml/qqml.h>
 
@@ -303,6 +306,13 @@ void registerQmlTypes() {
     qmlRegisterType<ZigbeeAdaptersProxy>(uri, 1, 0, "ZigbeeAdaptersProxy");
     qmlRegisterUncreatableType<ZigbeeNetwork>(uri, 1, 0, "ZigbeeNetwork", "Get it from the ZigbeeManager");
     qmlRegisterUncreatableType<ZigbeeNetworks>(uri, 1, 0, "ZigbeeNetworks", "Get it from the ZigbeeManager");
+
+    qmlRegisterType<ModbusRtuManager>(uri, 1, 0, "ModbusRtuManager");
+    qmlRegisterUncreatableType<ModbusRtuMaster>(uri, 1, 0, "ModbusRtuMaster", "Get it from the ModbusRtuMasters");
+    qmlRegisterUncreatableType<ModbusRtuMasters>(uri, 1, 0, "ModbusRtuMasters", "Get it from the ModbusRtuManager");
+    qmlRegisterUncreatableType<SerialPort>(uri, 1, 0, "SerialPort", "Get it from the SerialPorts");
+    qmlRegisterUncreatableType<SerialPorts>(uri, 1, 0, "SerialPorts", "Get it from the apropriate manager object.");
+    qmlRegisterType<SerialPortsProxy>(uri, 1, 0, "SerialPortsProxy");
 
     qmlRegisterType<NetworkManager>(uri, 1, 0, "NetworkManager");
     qmlRegisterUncreatableType<NetworkDevices>(uri, 1, 0, "NetworkDevices", "Get it from NetworkManager");

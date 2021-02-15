@@ -189,6 +189,23 @@ Page {
             Pane {
                 Layout.fillWidth: true
                 Material.elevation: layout.isGrid ? 1 : 0
+                visible: engine.jsonRpcClient.ensureServerVersion("5.4")
+
+                padding: 0
+                NymeaSwipeDelegate {
+                    width: parent.width
+                    iconName: "../images/modbus.svg"
+                    text: qsTr("Modbus RTU")
+                    subText: qsTr("Configure Modbus RTU master interfaces")
+                    prominentSubText: false
+                    wrapTexts: false
+                    onClicked: pageStack.push(Qt.resolvedUrl("system/ModbusRtuSettingsPage.qml"))
+                }
+            }
+
+            Pane {
+                Layout.fillWidth: true
+                Material.elevation: layout.isGrid ? 1 : 0
 
                 padding: 0
                 NymeaSwipeDelegate {

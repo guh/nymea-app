@@ -20,6 +20,12 @@ INCLUDEPATH += \
     $$top_srcdir/QtZeroConf
 
 SOURCES += \
+    $$PWD/modbus/modbusrtumanager.cpp \
+    $$PWD/modbus/modbusrtumaster.cpp \
+    $$PWD/modbus/modbusrtumasters.cpp \
+    $$PWD/types/serialport.cpp \
+    $$PWD/types/serialports.cpp \
+    $$PWD/types/serialportsproxy.cpp \
     $$PWD/wifisetup/btwifisetup.cpp \
     $${PWD}/configuration/networkmanager.cpp \
     $${PWD}/engine.cpp \
@@ -163,6 +169,12 @@ SOURCES += \
 
 
 HEADERS += \
+    $$PWD/modbus/modbusrtumanager.h \
+    $$PWD/modbus/modbusrtumaster.h \
+    $$PWD/modbus/modbusrtumasters.h \
+    $$PWD/types/serialport.h \
+    $$PWD/types/serialports.h \
+    $$PWD/types/serialportsproxy.h \
     $$PWD/wifisetup/btwifisetup.h \
     $${PWD}/configuration/networkmanager.h \
     $${PWD}/engine.h \
