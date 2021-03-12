@@ -92,10 +92,6 @@ SettingsPageBase {
         }
     }
 
-    SettingsPageSectionHeader {
-        text: qsTr("Modbus RTU masters")
-    }
-
     ListModel {
         id: serialPortBaudrateModel
         ListElement { value: 9600; text: qsTr("9600 Bd") }
@@ -173,20 +169,28 @@ SettingsPageBase {
         }
     }
 
-    Label {
+    Item {
         Layout.fillWidth: true
-        Layout.leftMargin: app.margins; Layout.rightMargin: app.margins
-        wrapMode: Text.WordWrap
-        text: qsTr("In this section you can configure system wide modbus RTU master connections which can be used in different plugins.")
-        visible: modbusRtuManager.supported
-    }
+        Layout.preferredHeight: root.height
+        visible: modbusRtuManager.modbusRtuMasters.count == 0 && modbusRtuManager.supported
 
-    Label {
-        Layout.fillWidth: true
-        Layout.leftMargin: app.margins; Layout.rightMargin: app.margins
-        wrapMode: Text.WordWrap
-        text: qsTr("There are no modbus RTU masters set up yet.")
-        visible: modbusRtuManager.modbusRtuMasters.count === 0 && modbusRtuManager.supported
+        EmptyViewPlaceholder {
+            width: parent.width - app.margins * 2
+            anchors.centerIn: parent
+            title: qsTr("Modbus RTU masters")
+            text: qsTr("There are no Modbus RTU masters set up yet.\nIn order to have Modbus RTU available as resource in the system, please add a new Modbus RTU master.")
+            imageSource: "/ui/images/modbus.svg"
+            buttonText: qsTr("Add Modbus RTU master")
+            onButtonClicked: {
+                pageStack.push(Qt.resolvedUrl("ModbusRtuAddMasterPage.qml"), {
+                                   modbusRtuManager: modbusRtuManager,
+                                   serialPortBaudrateModel: serialPortBaudrateModel,
+                                   serialPortParityModel: serialPortParityModel,
+                                   serialPortDataBitsModel: serialPortDataBitsModel,
+                                   serialPortStopBitsModel: serialPortStopBitsModel
+                               })
+            }
+        }
     }
 
     Label {
